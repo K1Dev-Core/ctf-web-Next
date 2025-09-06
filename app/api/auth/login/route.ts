@@ -1,32 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getUserByUsername, updateUser } from '@/lib/database'
-import bcrypt from 'bcryptjs'
+import { getUserByUsername, updateUser, createUser } from '@/lib/database'
 
 export async function POST(request: NextRequest) {
   try {
-    const { username, password } = await request.json()
+    const { username } = await request.json()
 
-    if (!username || !password) {
+    if (!username) {
       return NextResponse.json(
-        { error: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน' },
+        { error: 'กรุณากรอกชื่อผู้ใช้' },
         { status: 400 }
       )
     }
 
-    const user = getUserByUsername(username)
+    let user = getUserByUsername(username)
+    
     if (!user) {
-      return NextResponse.json(
-        { error: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' },
-        { status: 401 }
-      )
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password)
-    if (!isPasswordValid) {
-      return NextResponse.json(
-        { error: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' },
-        { status: 401 }
-      )
+      user = createUser({
+        username,
+        password: '',
+        email: undefined
+      })
     }
 
     updateUser(user.id, { lastLogin: new Date().toISOString() })

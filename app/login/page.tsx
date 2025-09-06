@@ -1,14 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardBody, Input, Button, Spacer } from '@nextui-org/react'
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
+import { Card, CardBody, Input, Button } from '@nextui-org/react'
+import { UserIcon } from '@heroicons/react/24/outline'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [isVisible, setIsVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -21,7 +18,7 @@ export default function LoginPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username }),
       })
 
       if (response.ok) {
@@ -67,59 +64,22 @@ export default function LoginPage() {
                     input: "text-htb-green",
                     inputWrapper: "htb-border bg-htb-dark"
                   }}
-                />
-              </div>
-
-              <div>
-                <Input
-                  type={isVisible ? "text" : "password"}
-                  label="รหัสผ่าน"
-                  placeholder="กรอกรหัสผ่าน"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="terminal-text"
-                  classNames={{
-                    input: "text-htb-green",
-                    inputWrapper: "htb-border bg-htb-dark"
-                  }}
-                  endContent={
-                    <button
-                      className="focus:outline-none"
-                      type="button"
-                      onClick={() => setIsVisible(!isVisible)}
-                    >
-                      {isVisible ? (
-                        <EyeSlashIcon className="w-4 h-4 text-htb-green" />
-                      ) : (
-                        <EyeIcon className="w-4 h-4 text-htb-green" />
-                      )}
-                    </button>
+                  startContent={
+                    <UserIcon className="w-4 h-4 text-htb-green" />
                   }
                 />
               </div>
-
-              <Spacer y={4} />
 
               <Button
                 type="submit"
                 className="w-full htb-gradient text-htb-dark font-semibold"
                 size="lg"
                 isLoading={isLoading}
-                disabled={!username || !password}
+                disabled={!username}
               >
                 {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
               </Button>
             </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-400">
-                ยังไม่มีบัญชี?{' '}
-                <Link href="/register" className="text-htb-green hover:underline">
-                  สมัครสมาชิก
-                </Link>
-              </p>
-            </div>
           </CardBody>
         </Card>
 

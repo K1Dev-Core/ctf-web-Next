@@ -20,6 +20,9 @@ module.exports = {
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'monospace'],
+      },
+      borderRadius: {
+        'none': '0',
       }
     },
   },

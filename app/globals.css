@@ -43,7 +43,17 @@ a {
 }
 
 .htb-border {
-  border: 1px solid #9FEF00;
+  border: 2px solid #9FEF00;
+}
+
+.htb-sharp {
+  border-radius: 0;
+}
+
+.htb-card {
+  border-radius: 0;
+  border: 2px solid #9FEF00;
+  background: #0D1117;
 }
 
 .terminal-text {
@@ -53,7 +63,8 @@ a {
 
 .terminal-bg {
   background-color: #0D1117;
-  border: 1px solid #161B22;
+  border: 2px solid #161B22;
+  border-radius: 0;
 }
 
 @media (prefers-color-scheme: dark) {
